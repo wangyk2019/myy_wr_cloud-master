@@ -1,0 +1,9 @@
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:mysql://sh-cdb-mbj6mdpc.sql.tencentcdb.com:61732/db_waterinfo?useUnicode=true&characterEncoding=UTF-8
+    username: winfo
+    password: myyun@r@winfo
+
+server:
+  port: 8081

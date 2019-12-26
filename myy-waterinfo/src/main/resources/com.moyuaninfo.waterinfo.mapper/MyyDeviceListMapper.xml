@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moyuaninfo.waterinfo.dao.MyyDeviceListMapper">
+  <resultMap id="BaseResultMap" type="com.moyuaninfo.waterinfo.model.MyyDeviceList">
+    <id column="device_list_id" jdbcType="INTEGER" property="deviceListId" />
+    <result column="areaone_id" jdbcType="INTEGER" property="areaoneId" />
+    <result column="addr" jdbcType="VARCHAR" property="addr" />
+    <result column="latitude" jdbcType="VARCHAR" property="latitude" />
+    <result column="longitude" jdbcType="VARCHAR" property="longitude" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    device_list_id, areaone_id, addr, latitude, longitude, state, create_user, comment, 
+    createtime, updatetime
+  </sql>
+  <select id="selectByExample" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceListExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from myy_device_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from myy_device_list
+    where device_list_id = #{deviceListId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from myy_device_list
+    where device_list_id = #{deviceListId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceListExample">
+    delete from myy_device_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceList">
+    insert into myy_device_list (device_list_id, areaone_id, addr, 
+      latitude, longitude, state, 
+      create_user, comment, createtime, 
+      updatetime)
+    values (#{deviceListId,jdbcType=INTEGER}, #{areaoneId,jdbcType=INTEGER}, #{addr,jdbcType=VARCHAR}, 
+      #{latitude,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
+      #{createUser,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceList">
+    insert into myy_device_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deviceListId != null">
+        device_list_id,
+      </if>
+      <if test="areaoneId != null">
+        areaone_id,
+      </if>
+      <if test="addr != null">
+        addr,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deviceListId != null">
+        #{deviceListId,jdbcType=INTEGER},
+      </if>
+      <if test="areaoneId != null">
+        #{areaoneId,jdbcType=INTEGER},
+      </if>
+      <if test="addr != null">
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceListExample" resultType="java.lang.Integer">
+    select count(*) from myy_device_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update myy_device_list
+    <set>
+      <if test="record.deviceListId != null">
+        device_list_id = #{record.deviceListId,jdbcType=INTEGER},
+      </if>
+      <if test="record.areaoneId != null">
+        areaone_id = #{record.areaoneId,jdbcType=INTEGER},
+      </if>
+      <if test="record.addr != null">
+        addr = #{record.addr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latitude != null">
+        latitude = #{record.latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longitude != null">
+        longitude = #{record.longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.createUser != null">
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatetime != null">
+        updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update myy_device_list
+    set device_list_id = #{record.deviceListId,jdbcType=INTEGER},
+      areaone_id = #{record.areaoneId,jdbcType=INTEGER},
+      addr = #{record.addr,jdbcType=VARCHAR},
+      latitude = #{record.latitude,jdbcType=VARCHAR},
+      longitude = #{record.longitude,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=INTEGER},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      updatetime = #{record.updatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceList">
+    update myy_device_list
+    <set>
+      <if test="areaoneId != null">
+        areaone_id = #{areaoneId,jdbcType=INTEGER},
+      </if>
+      <if test="addr != null">
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where device_list_id = #{deviceListId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceList">
+    update myy_device_list
+    set areaone_id = #{areaoneId,jdbcType=INTEGER},
+      addr = #{addr,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where device_list_id = #{deviceListId,jdbcType=INTEGER}
+  </update>
+</mapper>

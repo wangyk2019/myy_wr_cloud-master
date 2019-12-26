@@ -1,0 +1,30 @@
+server:
+  port: 7001
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://moyuan:moyuan123@localhost:8010/eureka/
+
+spring:
+  application:
+    name: configserver
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/moyuaninfo/warn_config
+          search-paths: myy_wr_config
+          username: wangyk2019
+          password: wangyk1234
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh

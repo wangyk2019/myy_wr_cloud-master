@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/configserver/configserver.iml" filepath="$PROJECT_DIR$/configserver/configserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myy-baseserver/myy-baseserver.iml" filepath="$PROJECT_DIR$/myy-baseserver/myy-baseserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myy-camera/myy-camera.iml" filepath="$PROJECT_DIR$/myy-camera/myy-camera.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myy-cloudnetty/myy-cloudnetty.iml" filepath="$PROJECT_DIR$/myy-cloudnetty/myy-cloudnetty.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myy-dangerInfo/myy-dangerInfo.iml" filepath="$PROJECT_DIR$/myy-dangerInfo/myy-dangerInfo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myy-eureka/myy-eureka.iml" filepath="$PROJECT_DIR$/myy-eureka/myy-eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myy-liveplay/myy-liveplay.iml" filepath="$PROJECT_DIR$/myy-liveplay/myy-liveplay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myy-push/myy-push.iml" filepath="$PROJECT_DIR$/myy-push/myy-push.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myy-security/myy-security.iml" filepath="$PROJECT_DIR$/myy-security/myy-security.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myy-signin/myy-signin.iml" filepath="$PROJECT_DIR$/myy-signin/myy-signin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myy-suggest/myy-suggest.iml" filepath="$PROJECT_DIR$/myy-suggest/myy-suggest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myy-waterinfo/myy-waterinfo.iml" filepath="$PROJECT_DIR$/myy-waterinfo/myy-waterinfo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myy-zuul/myy-zuul.iml" filepath="$PROJECT_DIR$/myy-zuul/myy-zuul.iml" />
+      <module fileurl="file://$PROJECT_DIR$/watercloud.iml" filepath="$PROJECT_DIR$/watercloud.iml" />
+    </modules>
+  </component>
+</project>

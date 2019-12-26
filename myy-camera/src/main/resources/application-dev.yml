@@ -1,0 +1,56 @@
+server:
+  port: 8040
+spring:
+  application:
+    name: myy-camera
+  datasource:
+    url: jdbc:mysql://sh-cdb-mbj6mdpc.sql.tencentcdb.com:61732/db_river_test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: ssr
+    password: myyun@r@srr
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+      initialSize: 10
+      minIdle: 8
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      filters: stat,wall,log4j
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 1000
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://moyuan:moyuan123@localhost:8010/eureka/
+
+feign:
+  hystrix:
+    enabled: true
+
+ribbon:
+  ConnectTimeout: 10000
+  ReadTimeout: 10000
+
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 40000

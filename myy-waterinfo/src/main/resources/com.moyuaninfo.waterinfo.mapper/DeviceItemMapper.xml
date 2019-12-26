@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moyuaninfo.waterinfo.dao.DeviceItemMapper">
+
+  <insert id="addDeviceItem" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceItem">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    INSERT INTO myy_device_item (device_type, device_name, device_price,
+    detect_range, unit, `precision`,
+    principle, comm, detect_object,
+    createtime, updatetime, state,
+    `comment`, ex1, ex2,
+    ex3, ex4, ex5, `describe`
+    )
+    VALUES (#{deviceType,jdbcType=VARCHAR}, #{deviceName,jdbcType=VARCHAR}, #{devicePrice,jdbcType=DECIMAL},
+    #{detectRange,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{precision,jdbcType=VARCHAR},
+    #{principle,jdbcType=VARCHAR}, #{comm,jdbcType=VARCHAR}, #{detectObject,jdbcType=VARCHAR},
+    #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, #{state,jdbcType=CHAR},
+    #{comment,jdbcType=VARCHAR}, #{ex1,jdbcType=VARCHAR}, #{ex2,jdbcType=VARCHAR},
+    #{ex3,jdbcType=VARCHAR}, #{ex4,jdbcType=VARCHAR}, #{ex5,jdbcType=VARCHAR}, #{describe,jdbcType=LONGVARCHAR}
+    )
+  </insert>
+
+  <update id="updateDeviceItemById" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceItem">
+    UPDATE myy_device_item
+    <set>
+      <if test="deviceType != null">
+        device_type = #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceName != null">
+        device_name = #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="devicePrice != null">
+        device_price = #{devicePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="detectRange != null">
+        detect_range = #{detectRange,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="precision != null">
+        `precision` = #{precision,jdbcType=VARCHAR},
+      </if>
+      <if test="principle != null">
+        principle = #{principle,jdbcType=VARCHAR},
+      </if>
+      <if test="comm != null">
+        comm = #{comm,jdbcType=VARCHAR},
+      </if>
+      <if test="detectObject != null">
+        detect_object = #{detectObject,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=CHAR},
+      </if>
+      <if test="comment != null">
+        `comment` = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="ex1 != null">
+        ex1 = #{ex1,jdbcType=VARCHAR},
+      </if>
+      <if test="ex2 != null">
+        ex2 = #{ex2,jdbcType=VARCHAR},
+      </if>
+      <if test="ex3 != null">
+        ex3 = #{ex3,jdbcType=VARCHAR},
+      </if>
+      <if test="ex4 != null">
+        ex4 = #{ex4,jdbcType=VARCHAR},
+      </if>
+      <if test="ex5 != null">
+        ex5 = #{ex5,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null">
+        `describe` = #{describe,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    WHERE id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="deleteDeviceItemById" parameterType="java.lang.Integer">
+    UPDATE  myy_device_item
+    SET     state = '0'
+    WHERE   id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getDeviceItemListByDistrictAndRiver" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT  id
+            ,device_type AS deviceType
+            ,device_name AS deviceName
+            ,device_price AS devicePrice
+            ,detect_range AS detectRange
+            ,unit
+            ,`precision`
+            ,principle
+            ,comm
+            ,detect_object AS detectObject
+            ,`comment`
+    FROM    myy_device_item
+    WHERE   state = 1
+    <if test="districtId != null">
+      AND district_id = #{districtId,jdbcType=INTEGER}
+    </if>
+    <if test="riverId != null">
+      AND river_id = #{riverId,jdbcType=INTEGER}
+    </if>
+  </select>
+
+</mapper>

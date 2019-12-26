@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moyuaninfo.suggest.dao.SuggestMapper">
+
+    <select id="getRiverList" resultType="java.util.Map">
+        SELECT      id AS areaId
+                    ,`name` AS areaName
+                    ,districtid AS districtId
+        FROM        myy_areaone
+        WHERE       state = 1
+        AND         districtid = #{districtId,jdbcType=INTEGER}
+    </select>
+
+    <insert id="addSuggest" parameterType="com.moyuaninfo.suggest.model.MyySuggest">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO myy_suggest (`status`, area_id, district_id,
+        create_user, update_user, create_time,
+        update_time, `comment`, state,
+        content, photo_path, result,
+        suggest_type, site, create_user_name)
+        VALUES (#{status,jdbcType=VARCHAR}, #{areaId,jdbcType=INTEGER}, #{districtId,jdbcType=INTEGER},
+        #{createUser,jdbcType=BIGINT}, #{updateUser,jdbcType=BIGINT}, #{createTime},
+        #{updateTime}, #{comment,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR},
+        #{content,jdbcType=LONGVARCHAR}, #{photoPath,jdbcType=LONGVARCHAR},#{result,jdbcType=LONGVARCHAR},
+        #{suggestType,jdbcType=INTEGER}, #{site,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="getSuggestListByUserRole" parameterType="com.moyuaninfo.suggest.dto.SuggestListDto" resultType="java.util.Map">
+        SELECT      suggest.id AS suggestId
+                    ,area.`name` AS riverName
+                    ,suggest.`content`
+                    ,suggest.photo_path AS photoPath
+                    ,suggest.result
+                    ,suggest.`status`
+                    ,CASE suggest.`status` WHEN 0 THEN '未处理' WHEN 1 THEN '已处理' ELSE '' END AS statusValue
+                    ,DATE_FORMAT(suggest.create_time,'%Y-%m-%d %H:%m:%s') AS createTime
+                    ,IFNULL(suggest.create_user_name,'匿名用户') AS createUserName
+                    ,suggest.site AS site
+                    ,myyuser.avatar_imgurl AS avatarImgurl
+        FROM        myy_suggest AS suggest
+        LEFT JOIN   myy_areaone AS area
+        ON          suggest.area_id = area.id
+        LEFT JOIN   myy_user AS myyuser
+        ON          suggest.create_user = myyuser.id
+        WHERE       suggest.state = 1
+        AND         suggest_type = #{suggestType}
+        <if test="districtStatus">
+            AND suggest.district_id = #{districtId}
+        </if>
+        <if test="areaId != null">
+            AND suggest.area_id = #{areaId}
+        </if>
+        <if test="status == 0">
+            AND TO_DAYS(create_time) = TO_DAYS(NOW())
+        </if>
+        <if test="status == 1">
+            AND suggest.`status` = 0
+        </if>
+        <if test="status == 2">
+            AND suggest.`status` = 1
+        </if>
+        <if test="beginTime != null and endTime != null">
+            AND suggest.create_time BETWEEN #{beginTime} AND #{endTime}
+        </if>
+    </select>
+
+    <select id="getSuggestListByUserId" parameterType="com.moyuaninfo.suggest.dto.SuggestListDto" resultType="java.util.Map">
+        SELECT      suggest.id AS suggestId
+                    ,suggest.`content`
+                    ,suggest.photo_path AS photoPath
+                    ,suggest.`status`
+                    ,CASE suggest.`status` WHEN 0 THEN '未处理' WHEN 1 THEN '已处理' ELSE '' END AS statusValue
+                    ,DATE_FORMAT(suggest.create_time,'%Y-%m-%d %H:%m:%s') AS createTime
+                    ,suggest.site AS site
+                    ,myyuser.avatar_imgurl AS avatarImgurl
+        FROM        myy_suggest AS suggest
+        LEFT JOIN   myy_user AS myyuser
+        ON          suggest.create_user = myyuser.id
+        WHERE       suggest.state = 1
+        AND         create_user = #{userId}
+        <if test="status == 0">
+            AND TO_DAYS(create_time) = TO_DAYS(NOW())
+        </if>
+        <if test="status == 1">
+            AND suggest.`status` = 0
+        </if>
+        <if test="status == 2">
+            AND suggest.`status` = 1
+        </if>
+    </select>
+
+    <select id="getSuggestDetailBySuggestId" parameterType="java.lang.Long" resultType="java.util.Map">
+        SELECT      IFNULL(suggest.create_user_name,'匿名用户') AS createUserName
+                    ,myyuser.phonenumber AS createUserPhonenumber
+                    ,DATE_FORMAT(suggest.create_time,'%Y-%m-%d %H:%m:%s') AS createTime
+                    ,area.`name` AS riverName
+                    ,suggest.site AS site
+                    ,suggest.`content`
+                    ,suggest.photo_path AS photoPath
+                    ,suggest.update_user_name AS updateUserName
+                    ,suggest.update_user_phonenumber AS updateUserPhonenumber
+                    ,DATE_FORMAT(suggest.update_time,'%Y-%m-%d %H:%m:%s') AS updateTime
+                    ,suggest.solve_photo_path AS solvePhotoPath
+                    ,suggest.result
+                    ,suggest.`status`
+                    ,CASE suggest.`status` WHEN 0 THEN '未处理' WHEN 1 THEN '已处理' ELSE '' END AS statusValue
+                    ,myyuser.avatar_imgurl AS avatarImgurl
+        FROM        myy_suggest AS suggest
+        LEFT JOIN   myy_areaone AS area
+        ON          suggest.area_id = area.id
+        LEFT JOIN   myy_user AS myyuser
+        ON          suggest.create_user = myyuser.id
+        WHERE       suggest.state = 1
+        AND         suggest.id = #{suggestId}
+    </select>
+
+    <select id="getSuggestListBySearch" parameterType="com.moyuaninfo.suggest.dto.SuggestListDto" resultType="java.util.Map">
+        SELECT      suggest.id AS suggestId
+                    ,IFNULL(suggest.create_user_name,'匿名用户') AS createUserName
+                    ,area.`name` AS riverName
+                    ,suggest.site AS site
+                    ,DATE_FORMAT(suggest.create_time,'%Y-%m-%d %H:%m:%s') AS createTime
+                    ,suggest.`content`
+                    ,suggest.photo_path AS photoPath
+                    ,suggest.`status`
+                    ,CASE suggest.`status` WHEN 0 THEN '未处理' WHEN 1 THEN '已处理' ELSE '' END AS statusValue
+                    ,myyuser.avatar_imgurl AS avatarImgurl
+        FROM        myy_suggest AS suggest
+        LEFT JOIN   myy_areaone AS area
+        ON          suggest.area_id = area.id
+        LEFT JOIN   myy_user AS myyuser
+        ON          suggest.create_user = myyuser.id
+        WHERE       suggest.state = 1
+        <if test="districtStatus">
+            AND suggest.district_id = #{districtId}
+        </if>
+        <if test="status == 0">
+            AND TO_DAYS(create_time) = TO_DAYS(NOW())
+        </if>
+        <if test="status == 1">
+            AND suggest.`status` = 0
+        </if>
+        <if test="status == 2">
+            AND suggest.`status` = 1
+        </if>
+        <if test="searchName != null and searchName != ''">
+            AND suggest.area_id IN
+            (SELECT id FROM myy_areaone WHERE state = '1' AND `name` LIKE CONCAT('%',#{searchName,jdbcType=VARCHAR},'%'))
+        </if>
+        UNION
+        SELECT      suggest.id AS suggestId
+                    ,IFNULL(suggest.create_user_name,'匿名用户') AS createUserName
+                    ,area.`name` AS riverName
+                    ,suggest.site AS site
+                    ,DATE_FORMAT(suggest.create_time,'%Y-%m-%d %H:%m:%s') AS createTime
+                    ,suggest.`content`
+                    ,suggest.photo_path AS photoPath
+                    ,suggest.`status`
+                    ,CASE suggest.`status` WHEN 0 THEN '未处理' WHEN 1 THEN '已处理' ELSE '' END AS statusValue
+                    ,myyuser.avatar_imgurl AS avatarImgurl
+        FROM        myy_suggest AS suggest
+        LEFT JOIN   myy_areaone AS area
+        ON          suggest.area_id = area.id
+        LEFT JOIN   myy_user AS myyuser
+        ON          suggest.create_user = myyuser.id
+        WHERE       suggest.state = 1
+        <if test="districtStatus">
+            AND suggest.district_id = #{districtId}
+        </if>
+        <if test="status == 0">
+            AND TO_DAYS(create_time) = TO_DAYS(NOW())
+        </if>
+        <if test="status == 1">
+            AND suggest.`status` = 0
+        </if>
+        <if test="status == 2">
+            AND suggest.`status` = 1
+        </if>
+        <if test="searchName != null and searchName != ''">
+            AND suggest.`content` LIKE CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
+        </if>
+    </select>
+
+    <update id="updateSuggestResult" parameterType="com.moyuaninfo.suggest.dto.SuggestSolveDto">
+        UPDATE      myy_suggest
+        SET         `status` = 1,
+                    result = #{result,jdbcType=VARCHAR},
+                    update_user = #{userId,jdbcType=BIGINT},
+                    update_time = #{updateTime,jdbcType=TIMESTAMP},
+                    update_user_name = #{updateUserName,jdbcType=VARCHAR},
+                    update_user_phonenumber = #{updateUserPhonenumber,jdbcType=VARCHAR},
+                    solve_photo_path = #{solvePhotoPath,jdbcType=VARCHAR}
+        WHERE       id = #{suggestId,jdbcType=BIGINT}
+    </update>
+
+    <update id="deleteSuggest" parameterType="java.util.Map">
+        UPDATE      myy_suggest
+        SET         state = 0,
+        update_user = #{userId,jdbcType=BIGINT},
+        update_time = #{updateTime,jdbcType=TIMESTAMP}
+        WHERE       id
+        IN
+        <foreach collection ="suggestIds" item="item" index= "index" open = "(" close = ")" separator =",">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="getSuggestPhotoById" parameterType="java.util.Map" resultType="java.lang.String">
+        SELECT      IFNULL(photo_path,'') AS photoPath
+        FROM        myy_suggest
+        WHERE       state = 1
+        AND         id
+        IN
+        <foreach collection ="suggestIds" item="item" index= "index" open = "(" close = ")" separator =",">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getDistrictInfo" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT      IFNULL(`name`,'') AS districatName
+        FROM        myy_district
+        WHERE       id = #{districtId}
+        AND         state = 1
+    </select>
+
+</mapper>

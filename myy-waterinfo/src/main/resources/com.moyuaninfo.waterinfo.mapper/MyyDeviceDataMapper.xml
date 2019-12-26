@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moyuaninfo.waterinfo.dao.MyyDeviceDataMapper">
+  <resultMap id="BaseResultMap" type="com.moyuaninfo.waterinfo.model.MyyDeviceData">
+    <id column="device_data_id" jdbcType="INTEGER" property="deviceDataId" />
+    <result column="device_list_id" jdbcType="INTEGER" property="deviceListId" />
+    <result column="effective" jdbcType="INTEGER" property="effective" />
+    <result column="digital_PH_value" jdbcType="VARCHAR" property="digitalPhValue" />
+    <result column="temperature_value" jdbcType="VARCHAR" property="temperatureValue" />
+    <result column="digital_turbidity_value" jdbcType="VARCHAR" property="digitalTurbidityValue" />
+    <result column="dissolved_oxygen_value" jdbcType="VARCHAR" property="dissolvedOxygenValue" />
+    <result column="ammonian_trogen_value" jdbcType="VARCHAR" property="ammoniaNTrogenValue" />
+    <result column="total_phosphorus_value" jdbcType="VARCHAR" property="totalPhosphorusValue" />
+    <result column="permanganate_value" jdbcType="VARCHAR" property="permanganateValue" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    device_data_id, device_list_id, effective, digital_PH_value, temperature_value, digital_turbidity_value, 
+    dissolved_oxygen_value, `ammonian_trogen_value`, total_phosphorus_value, permanganate_value,
+    createtime, updatetime
+  </sql>
+  <select id="selectByExample" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceDataExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from myy_device_data
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from myy_device_data
+    where device_data_id = #{deviceDataId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from myy_device_data
+    where device_data_id = #{deviceDataId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceDataExample">
+    delete from myy_device_data
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceData">
+    insert into myy_device_data (device_data_id, device_list_id, effective, 
+      digital_PH_value, temperature_value, digital_turbidity_value, 
+      dissolved_oxygen_value, `ammonian_trogen_value`,
+      total_phosphorus_value, permanganate_value, 
+      createtime, updatetime)
+    values (#{deviceDataId,jdbcType=INTEGER}, #{deviceListId,jdbcType=INTEGER}, #{effective,jdbcType=INTEGER}, 
+      #{digitalPhValue,jdbcType=VARCHAR}, #{temperatureValue,jdbcType=VARCHAR}, #{digitalTurbidityValue,jdbcType=VARCHAR}, 
+      #{dissolvedOxygenValue,jdbcType=VARCHAR}, #{ammoniaNTrogenValue,jdbcType=VARCHAR}, 
+      #{totalPhosphorusValue,jdbcType=VARCHAR}, #{permanganateValue,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceData">
+    insert into myy_device_data
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deviceDataId != null">
+        device_data_id,
+      </if>
+      <if test="deviceListId != null">
+        device_list_id,
+      </if>
+      <if test="effective != null">
+        effective,
+      </if>
+      <if test="digitalPhValue != null">
+        digital_PH_value,
+      </if>
+      <if test="temperatureValue != null">
+        temperature_value,
+      </if>
+      <if test="digitalTurbidityValue != null">
+        digital_turbidity_value,
+      </if>
+      <if test="dissolvedOxygenValue != null">
+        dissolved_oxygen_value,
+      </if>
+      <if test="ammoniaNTrogenValue != null">
+        `ammonian_trogen_value`,
+      </if>
+      <if test="totalPhosphorusValue != null">
+        total_phosphorus_value,
+      </if>
+      <if test="permanganateValue != null">
+        permanganate_value,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deviceDataId != null">
+        #{deviceDataId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceListId != null">
+        #{deviceListId,jdbcType=INTEGER},
+      </if>
+      <if test="effective != null">
+        #{effective,jdbcType=INTEGER},
+      </if>
+      <if test="digitalPhValue != null">
+        #{digitalPhValue,jdbcType=VARCHAR},
+      </if>
+      <if test="temperatureValue != null">
+        #{temperatureValue,jdbcType=VARCHAR},
+      </if>
+      <if test="digitalTurbidityValue != null">
+        #{digitalTurbidityValue,jdbcType=VARCHAR},
+      </if>
+      <if test="dissolvedOxygenValue != null">
+        #{dissolvedOxygenValue,jdbcType=VARCHAR},
+      </if>
+      <if test="ammoniaNTrogenValue != null">
+        #{ammoniaNTrogenValue,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPhosphorusValue != null">
+        #{totalPhosphorusValue,jdbcType=VARCHAR},
+      </if>
+      <if test="permanganateValue != null">
+        #{permanganateValue,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceDataExample" resultType="java.lang.Integer">
+    select count(*) from myy_device_data
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update myy_device_data
+    <set>
+      <if test="record.deviceDataId != null">
+        device_data_id = #{record.deviceDataId,jdbcType=INTEGER},
+      </if>
+      <if test="record.deviceListId != null">
+        device_list_id = #{record.deviceListId,jdbcType=INTEGER},
+      </if>
+      <if test="record.effective != null">
+        effective = #{record.effective,jdbcType=INTEGER},
+      </if>
+      <if test="record.digitalPhValue != null">
+        digital_PH_value = #{record.digitalPhValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.temperatureValue != null">
+        temperature_value = #{record.temperatureValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.digitalTurbidityValue != null">
+        digital_turbidity_value = #{record.digitalTurbidityValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dissolvedOxygenValue != null">
+        dissolved_oxygen_value = #{record.dissolvedOxygenValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ammoniaNTrogenValue != null">
+        `ammonian_trogen_value` = #{record.ammoniaNTrogenValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalPhosphorusValue != null">
+        total_phosphorus_value = #{record.totalPhosphorusValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permanganateValue != null">
+        permanganate_value = #{record.permanganateValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatetime != null">
+        updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update myy_device_data
+    set device_data_id = #{record.deviceDataId,jdbcType=INTEGER},
+      device_list_id = #{record.deviceListId,jdbcType=INTEGER},
+      effective = #{record.effective,jdbcType=INTEGER},
+      digital_PH_value = #{record.digitalPhValue,jdbcType=VARCHAR},
+      temperature_value = #{record.temperatureValue,jdbcType=VARCHAR},
+      digital_turbidity_value = #{record.digitalTurbidityValue,jdbcType=VARCHAR},
+      dissolved_oxygen_value = #{record.dissolvedOxygenValue,jdbcType=VARCHAR},
+      `ammonian_trogen_value` = #{record.ammoniaNTrogenValue,jdbcType=VARCHAR},
+      total_phosphorus_value = #{record.totalPhosphorusValue,jdbcType=VARCHAR},
+      permanganate_value = #{record.permanganateValue,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      updatetime = #{record.updatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceData">
+    update myy_device_data
+    <set>
+      <if test="deviceListId != null">
+        device_list_id = #{deviceListId,jdbcType=INTEGER},
+      </if>
+      <if test="effective != null">
+        effective = #{effective,jdbcType=INTEGER},
+      </if>
+      <if test="digitalPhValue != null">
+        digital_PH_value = #{digitalPhValue,jdbcType=VARCHAR},
+      </if>
+      <if test="temperatureValue != null">
+        temperature_value = #{temperatureValue,jdbcType=VARCHAR},
+      </if>
+      <if test="digitalTurbidityValue != null">
+        digital_turbidity_value = #{digitalTurbidityValue,jdbcType=VARCHAR},
+      </if>
+      <if test="dissolvedOxygenValue != null">
+        dissolved_oxygen_value = #{dissolvedOxygenValue,jdbcType=VARCHAR},
+      </if>
+      <if test="ammoniaNTrogenValue != null">
+        `ammonian_trogen_value` = #{ammoniaNTrogenValue,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPhosphorusValue != null">
+        total_phosphorus_value = #{totalPhosphorusValue,jdbcType=VARCHAR},
+      </if>
+      <if test="permanganateValue != null">
+        permanganate_value = #{permanganateValue,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where device_data_id = #{deviceDataId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceData">
+    update myy_device_data
+    set device_list_id = #{deviceListId,jdbcType=INTEGER},
+      effective = #{effective,jdbcType=INTEGER},
+      digital_PH_value = #{digitalPhValue,jdbcType=VARCHAR},
+      temperature_value = #{temperatureValue,jdbcType=VARCHAR},
+      digital_turbidity_value = #{digitalTurbidityValue,jdbcType=VARCHAR},
+      dissolved_oxygen_value = #{dissolvedOxygenValue,jdbcType=VARCHAR},
+      `ammonian_trogen_value` = #{ammoniaNTrogenValue,jdbcType=VARCHAR},
+      total_phosphorus_value = #{totalPhosphorusValue,jdbcType=VARCHAR},
+      permanganate_value = #{permanganateValue,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where device_data_id = #{deviceDataId,jdbcType=INTEGER}
+  </update>
+
+  <!--   通过分配表id查询水质数据最新的一条selectBydeviceListIdAndTime-->
+  <select id="selectBydeviceListIdAndNewTime" parameterType="java.lang.Integer" resultType="com.moyuaninfo.waterinfo.model.MyyDeviceData">
+    SELECT * FROM myy_device_data
+    where
+    device_list_id = #{deviceListId,jdbcType=INTEGER}
+    ORDER BY device_data_id DESC LIMIT 0,1 ;
+  </select>
+
+
+
+</mapper>

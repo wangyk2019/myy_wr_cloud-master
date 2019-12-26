@@ -1,0 +1,81 @@
+spring:
+  application:
+    name: myy-cloudnetty
+#server:
+#  port: 2222
+#  cloud:
+#    config:
+#      uri: http://localhost:8086/
+#      profile: prod
+#      label: master
+#    bus:
+#      enabled: true
+#      trace:
+#        enabled: true
+#  rabbitmq:
+#    host: 49.234.11.248
+#    port: 5672
+#    username: admin
+#    password: admin
+#
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: bus-refresh
+
+#eureka:
+#  client:
+#    healthcheck:
+#      enabled: true
+
+#
+#spring:
+#  datasource:
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    url: jdbc:mysql://sh-cdb-mbj6mdpc.sql.tencentcdb.com:61732/db_warn?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#    username: myy
+#    password: myyun@r@myy
+#    driverClassName: com.mysql.cj.jdbc.Driver
+#    druid:
+#      initialSize: 10
+#      minIdle: 8
+#      maxActive: 20
+#      maxWait: 60000
+#      timeBetweenEvictionRunsMillis: 60000
+#      minEvictableIdleTimeMillis: 300000
+#      validationQuery: SELECT 1
+#      testWhileIdle: true
+#      filters: stat,wall,log4j
+#  jpa:
+#    database: mysql
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
+#    database-platform: org.hibernate.dialect.MySQL5Dialect
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://moyuan:moyuan123@localhost:8010/eureka/
+
+netty:
+  port:10086
+
+server:
+  port: 2222
+
+ribbon:
+  ReadTimeout: 5000
+  ConnectTimeout: 5000
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+          timeoutInMilliseconds: 30000
+
+logging.config: classpath:log4j.xml

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moyuaninfo.waterinfo.dao.WaterInfoMapper">
+
+  <select id="getDeviceInfoByDeviceAddr" resultType="java.util.Map">
+    SELECT    deviceList.id AS deviceId
+              ,deviceItem.detect_object AS detectObject
+              ,deviceItem.unit
+    FROM      myy_device_list AS deviceList
+    LEFT JOIN myy_device_item AS deviceItem
+    ON        deviceList.device_item_id = deviceItem.id
+    AND       deviceItem.state = '1'
+    WHERE     deviceList.state = '1'
+    AND       deviceList.addr = #{deviceAddr,jdbcType=VARCHAR}
+    LIMIT 1
+  </select>
+
+  <!-- 针对王工设计的表结构，db_waterinfo库 -->
+<!--  <insert id ="saveWaterInfo" parameterType="java.util.List" >
+    INSERT INTO myy_device_data
+    (device_id, state, `value`, unit, `comment`, createtime, updatetime)
+    VALUES
+    <foreach collection ="list" item="item" index= "index" separator =",">
+        (
+        #{item.deviceId}, #{item.state}, #{item.formatResult}, #{item.unit}
+        , #{item.detectObject}, #{item.createtime}, #{item.updatetime}
+        )
+    </foreach >
+  </insert>-->
+
+  <!-- 针对尹工新设计的表结构，db_river库 -->
+  <insert id ="saveWaterInfo" parameterType="java.util.List" >
+    INSERT INTO myy_device_data
+    (device_list_id, effective
+    , digital_PH_value, temperature_value, digital_turbidity_value, dissolved_oxygen_value
+    , ammonian_trogen_value, total_phosphorus_value, permanganate_value
+    , createtime, updatetime)
+    VALUES
+    <foreach collection ="list" item="item" index= "index" separator =",">
+        (
+        #{item.deviceListId}, #{item.effective}
+        , #{item.digitalPHvalue}, #{item.temperatureValue}, #{item.digitalTurbidityValue}, #{item.dissolvedOxygenValue}
+        , #{item.ammonianTrogenValue}, #{item.totalPhosphorusValue}, #{item.permanganateValue}
+        , #{item.createtime}, #{item.updatetime}
+        )
+    </foreach >
+  </insert>
+
+  <select id="getWaterQualityInfoListByTime" resultType="java.util.Map">
+    SELECT    device.detect_object AS detectObject
+              ,deviceDetectData.parameterIndex
+              ,'currentDay' AS timeType
+    FROM      (
+               SELECT     device_id AS deviceId
+                          ,CONCAT(`value`,unit) AS parameterIndex
+               FROM       myy_device_data
+               WHERE      state = '1'
+               AND        TO_DAYS(createtime) = TO_DAYS(NOW())
+               GROUP BY   device_id
+               ) AS deviceDetectData
+    INNER JOIN myy_device_item AS device
+    ON         deviceDetectData.deviceId = device.id
+    WHERE      device.state = '1'
+    UNION ALL
+    SELECT    device.detect_object AS detectObject
+              ,deviceDetectData.parameterIndex
+              ,'oneDayBefore' AS timeType
+    FROM      (
+                SELECT     device_id AS deviceId
+                           ,CONCAT(`value`,unit) AS parameterIndex
+                FROM       myy_device_data
+                WHERE      state = '1'
+                AND        TO_DAYS(NOW()) - TO_DAYS(createtime) = 1
+                GROUP BY   device_id
+              ) AS deviceDetectData
+    INNER JOIN myy_device_item AS device
+    ON         deviceDetectData.deviceId = device.id
+    WHERE      device.state = '1'
+    UNION ALL
+    SELECT    device.detect_object AS detectObject
+              ,deviceDetectData.parameterIndex
+              ,'twoDayBefore' AS timeType
+    FROM      (
+                SELECT     device_id AS deviceId
+                           ,CONCAT(`value`,unit) AS parameterIndex
+                FROM       myy_device_data
+                WHERE      state = '1'
+                AND        TO_DAYS(NOW()) - TO_DAYS(createtime) = 2
+                GROUP BY   device_id
+              ) AS deviceDetectData
+    INNER JOIN myy_device_item AS device
+    ON         deviceDetectData.deviceId = device.id
+    WHERE      device.state = '1'
+    UNION ALL
+    SELECT    device.detect_object AS detectObject
+              ,deviceDetectData.parameterIndex
+              ,'threeDayBefore' AS timeType
+    FROM      (
+                SELECT     device_id AS deviceId
+                           ,CONCAT(`value`,unit) AS parameterIndex
+                FROM       myy_device_data
+                WHERE      state = '1'
+                AND        TO_DAYS(NOW()) - TO_DAYS(createtime) = 3
+                GROUP BY   device_id
+              ) AS deviceDetectData
+    INNER JOIN myy_device_item AS device
+    ON         deviceDetectData.deviceId = device.id
+    WHERE      device.state = '1'
+    UNION ALL
+    SELECT     device.detect_object AS detectObject
+               ,deviceDetectData.parameterIndex
+               ,'oneWeekBefore' AS timeType
+    FROM      (
+                SELECT     device_id AS deviceId
+                           ,CONCAT(`value`,unit) AS parameterIndex
+                FROM       myy_device_data
+                WHERE      state = '1'
+                AND        TO_DAYS(NOW()) - TO_DAYS(createtime) = 7
+                GROUP BY   device_id
+              ) AS deviceDetectData
+    INNER JOIN myy_device_item AS device
+    ON         deviceDetectData.deviceId = device.id
+    WHERE      device.state = '1'
+  </select>
+
+  <select id="getWaterQualityInfoListByNewest" resultType="java.util.Map">
+    SELECT    device.detect_object AS detectObject
+              ,deviceDetectData.parameterIndex
+              ,'currentDay' AS timeType
+    FROM      (
+                SELECT temp.deviceId,temp.parameterIndex
+                FROM (
+                      SELECT     device_id AS deviceId
+                                 ,CONCAT(`value`,unit) AS parameterIndex
+                      FROM       myy_device_data
+                      WHERE      state = '1'
+                      ORDER BY   createtime DESC
+                     ) AS temp
+                GROUP BY temp.deviceId
+              ) AS deviceDetectData
+    INNER JOIN myy_device_item AS device
+    ON         deviceDetectData.deviceId = device.id
+    WHERE      device.state = '1'
+  </select>
+
+
+  <!-- 以下针对尹工新设计的表结构，db_river库 -->
+  <select id="getDeviceListByAreaoneId" resultType="java.util.Map">
+    SELECT     device_list_id AS deviceListId
+    FROM       myy_device_list
+    WHERE      areaone_id = #{areaoneId,jdbcType=INTEGER}
+    AND        state = '1'
+  </select>
+
+  <select id="getDeviceItemListByAllot" resultType="java.util.Map">
+    SELECT     IFNULL(comm,'') AS comm
+               ,IFNULL(detect_object,'') AS detectObject
+    FROM       myy_device_item
+    WHERE      device_list_id = #{deviceListId,jdbcType=INTEGER}
+    AND        state = '1'
+  </select>
+
+
+</mapper>

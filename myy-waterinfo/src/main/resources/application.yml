@@ -1,0 +1,58 @@
+spring:
+  profiles:
+    active: prod
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSX
+    time-zone: UTC
+    #热部署配置
+    devtools:
+      restart:
+        enabled: true
+      #  resources:
+      #配置静态路径，多个可用逗号隔开
+    #    static-locations: classpath:/META-INF/resources/,file:${upload.image.path}
+    datasource:
+      name: db_river
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      zeroDateTimeBehavior: convertToNull
+      filters: stat
+      maxActive: 20
+      initialSize: 3
+
+      maxWait: 60000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 20
+  application:
+    name: myy-waterinfo
+
+mybatis:
+  mapper-locations:
+    - classpath:com.moyuaninfo.waterinfo.mapper/*.xml
+
+server:
+  port: 8088
+  #配置elasticsearc原因，context-path前面要加servlet不然不识别，
+  #如果不用elasticsearc，不要加servlet，用下面注释掉的那个
+#  servlet.context-path: /myy-waterinfo
+#  context-path: /waterinfo
+#upload:
+#  image:
+#    path: /data/wwwroot/root/img/
+
+logging:
+  level:
+    com.moyuaninfo.waterinfo.dao: debug
+    com.moyuaninfo.waterinfo.mapper: debug
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://moyuan:moyuan123@localhost:8010/eureka/

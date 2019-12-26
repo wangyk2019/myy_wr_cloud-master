@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moyuaninfo.suggest.dao.UserMapper">
+
+    <select id="getUserInfoByUserId" resultType="java.util.Map">
+        SELECT      IFNULL(`role`,'none') AS userRole
+        FROM        myy_user
+        WHERE       state = 1
+        AND         id = #{userId}
+    </select>
+
+</mapper>

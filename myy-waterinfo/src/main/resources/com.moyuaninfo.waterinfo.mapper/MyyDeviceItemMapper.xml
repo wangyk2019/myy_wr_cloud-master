@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moyuaninfo.waterinfo.dao.MyyDeviceItemMapper">
+  <resultMap id="BaseResultMap" type="com.moyuaninfo.waterinfo.model.MyyDeviceItem">
+    <id column="device_item_id" jdbcType="INTEGER" property="deviceItemId" />
+    <result column="device_list_id" jdbcType="INTEGER" property="deviceListId" />
+    <result column="device_type" jdbcType="VARCHAR" property="deviceType" />
+    <result column="device_name" jdbcType="VARCHAR" property="deviceName" />
+    <result column="device_price" jdbcType="DECIMAL" property="devicePrice" />
+    <result column="detect_range" jdbcType="VARCHAR" property="detectRange" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="precision_value" jdbcType="VARCHAR" property="precisionValue" />
+    <result column="principle" jdbcType="VARCHAR" property="principle" />
+    <result column="comm" jdbcType="VARCHAR" property="comm" />
+    <result column="detect_object" jdbcType="VARCHAR" property="detectObject" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="ex1" jdbcType="VARCHAR" property="ex1" />
+    <result column="ex2" jdbcType="VARCHAR" property="ex2" />
+    <result column="ex3" jdbcType="VARCHAR" property="ex3" />
+    <result column="ex4" jdbcType="VARCHAR" property="ex4" />
+    <result column="ex5" jdbcType="VARCHAR" property="ex5" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.moyuaninfo.waterinfo.model.MyyDeviceItem">
+    <result column="describe" jdbcType="LONGVARBINARY" property="describe" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    device_item_id, device_list_id, device_type, device_name, device_price, detect_range, 
+    unit, precision_value, principle, comm, detect_object, createtime, updatetime, state, 
+    ex1, ex2, ex3, ex4, ex5
+  </sql>
+  <sql id="Blob_Column_List">
+    describe
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceItemExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from myy_device_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceItemExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from myy_device_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from myy_device_item
+    where device_item_id = #{deviceItemId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from myy_device_item
+    where device_item_id = #{deviceItemId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceItemExample">
+    delete from myy_device_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceItem">
+    insert into myy_device_item (device_item_id, device_list_id, device_type, 
+      device_name, device_price, detect_range, 
+      unit, precision_value, principle, 
+      comm, detect_object, createtime, 
+      updatetime, state, ex1, 
+      ex2, ex3, ex4, ex5, 
+      describe)
+    values (#{deviceItemId,jdbcType=INTEGER}, #{deviceListId,jdbcType=INTEGER}, #{deviceType,jdbcType=VARCHAR}, 
+      #{deviceName,jdbcType=VARCHAR}, #{devicePrice,jdbcType=DECIMAL}, #{detectRange,jdbcType=VARCHAR}, 
+      #{unit,jdbcType=VARCHAR}, #{precisionValue,jdbcType=VARCHAR}, #{principle,jdbcType=VARCHAR}, 
+      #{comm,jdbcType=VARCHAR}, #{detectObject,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{ex1,jdbcType=VARCHAR}, 
+      #{ex2,jdbcType=VARCHAR}, #{ex3,jdbcType=VARCHAR}, #{ex4,jdbcType=VARCHAR}, #{ex5,jdbcType=VARCHAR}, 
+      #{describe,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceItem">
+    insert into myy_device_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deviceItemId != null">
+        device_item_id,
+      </if>
+      <if test="deviceListId != null">
+        device_list_id,
+      </if>
+      <if test="deviceType != null">
+        device_type,
+      </if>
+      <if test="deviceName != null">
+        device_name,
+      </if>
+      <if test="devicePrice != null">
+        device_price,
+      </if>
+      <if test="detectRange != null">
+        detect_range,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="precisionValue != null">
+        precision_value,
+      </if>
+      <if test="principle != null">
+        principle,
+      </if>
+      <if test="comm != null">
+        comm,
+      </if>
+      <if test="detectObject != null">
+        detect_object,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="ex1 != null">
+        ex1,
+      </if>
+      <if test="ex2 != null">
+        ex2,
+      </if>
+      <if test="ex3 != null">
+        ex3,
+      </if>
+      <if test="ex4 != null">
+        ex4,
+      </if>
+      <if test="ex5 != null">
+        ex5,
+      </if>
+      <if test="describe != null">
+        describe,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deviceItemId != null">
+        #{deviceItemId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceListId != null">
+        #{deviceListId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceType != null">
+        #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceName != null">
+        #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="devicePrice != null">
+        #{devicePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="detectRange != null">
+        #{detectRange,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="precisionValue != null">
+        #{precisionValue,jdbcType=VARCHAR},
+      </if>
+      <if test="principle != null">
+        #{principle,jdbcType=VARCHAR},
+      </if>
+      <if test="comm != null">
+        #{comm,jdbcType=VARCHAR},
+      </if>
+      <if test="detectObject != null">
+        #{detectObject,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="ex1 != null">
+        #{ex1,jdbcType=VARCHAR},
+      </if>
+      <if test="ex2 != null">
+        #{ex2,jdbcType=VARCHAR},
+      </if>
+      <if test="ex3 != null">
+        #{ex3,jdbcType=VARCHAR},
+      </if>
+      <if test="ex4 != null">
+        #{ex4,jdbcType=VARCHAR},
+      </if>
+      <if test="ex5 != null">
+        #{ex5,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null">
+        #{describe,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceItemExample" resultType="java.lang.Integer">
+    select count(*) from myy_device_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update myy_device_item
+    <set>
+      <if test="record.deviceItemId != null">
+        device_item_id = #{record.deviceItemId,jdbcType=INTEGER},
+      </if>
+      <if test="record.deviceListId != null">
+        device_list_id = #{record.deviceListId,jdbcType=INTEGER},
+      </if>
+      <if test="record.deviceType != null">
+        device_type = #{record.deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceName != null">
+        device_name = #{record.deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.devicePrice != null">
+        device_price = #{record.devicePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.detectRange != null">
+        detect_range = #{record.detectRange,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null">
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.precisionValue != null">
+        precision_value = #{record.precisionValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.principle != null">
+        principle = #{record.principle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comm != null">
+        comm = #{record.comm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detectObject != null">
+        detect_object = #{record.detectObject,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatetime != null">
+        updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.ex1 != null">
+        ex1 = #{record.ex1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ex2 != null">
+        ex2 = #{record.ex2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ex3 != null">
+        ex3 = #{record.ex3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ex4 != null">
+        ex4 = #{record.ex4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ex5 != null">
+        ex5 = #{record.ex5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.describe != null">
+        describe = #{record.describe,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update myy_device_item
+    set device_item_id = #{record.deviceItemId,jdbcType=INTEGER},
+      device_list_id = #{record.deviceListId,jdbcType=INTEGER},
+      device_type = #{record.deviceType,jdbcType=VARCHAR},
+      device_name = #{record.deviceName,jdbcType=VARCHAR},
+      device_price = #{record.devicePrice,jdbcType=DECIMAL},
+      detect_range = #{record.detectRange,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      precision_value = #{record.precisionValue,jdbcType=VARCHAR},
+      principle = #{record.principle,jdbcType=VARCHAR},
+      comm = #{record.comm,jdbcType=VARCHAR},
+      detect_object = #{record.detectObject,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      state = #{record.state,jdbcType=INTEGER},
+      ex1 = #{record.ex1,jdbcType=VARCHAR},
+      ex2 = #{record.ex2,jdbcType=VARCHAR},
+      ex3 = #{record.ex3,jdbcType=VARCHAR},
+      ex4 = #{record.ex4,jdbcType=VARCHAR},
+      ex5 = #{record.ex5,jdbcType=VARCHAR},
+      describe = #{record.describe,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update myy_device_item
+    set device_item_id = #{record.deviceItemId,jdbcType=INTEGER},
+      device_list_id = #{record.deviceListId,jdbcType=INTEGER},
+      device_type = #{record.deviceType,jdbcType=VARCHAR},
+      device_name = #{record.deviceName,jdbcType=VARCHAR},
+      device_price = #{record.devicePrice,jdbcType=DECIMAL},
+      detect_range = #{record.detectRange,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      precision_value = #{record.precisionValue,jdbcType=VARCHAR},
+      principle = #{record.principle,jdbcType=VARCHAR},
+      comm = #{record.comm,jdbcType=VARCHAR},
+      detect_object = #{record.detectObject,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      state = #{record.state,jdbcType=INTEGER},
+      ex1 = #{record.ex1,jdbcType=VARCHAR},
+      ex2 = #{record.ex2,jdbcType=VARCHAR},
+      ex3 = #{record.ex3,jdbcType=VARCHAR},
+      ex4 = #{record.ex4,jdbcType=VARCHAR},
+      ex5 = #{record.ex5,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceItem">
+    update myy_device_item
+    <set>
+      <if test="deviceListId != null">
+        device_list_id = #{deviceListId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceType != null">
+        device_type = #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceName != null">
+        device_name = #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="devicePrice != null">
+        device_price = #{devicePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="detectRange != null">
+        detect_range = #{detectRange,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="precisionValue != null">
+        precision_value = #{precisionValue,jdbcType=VARCHAR},
+      </if>
+      <if test="principle != null">
+        principle = #{principle,jdbcType=VARCHAR},
+      </if>
+      <if test="comm != null">
+        comm = #{comm,jdbcType=VARCHAR},
+      </if>
+      <if test="detectObject != null">
+        detect_object = #{detectObject,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="ex1 != null">
+        ex1 = #{ex1,jdbcType=VARCHAR},
+      </if>
+      <if test="ex2 != null">
+        ex2 = #{ex2,jdbcType=VARCHAR},
+      </if>
+      <if test="ex3 != null">
+        ex3 = #{ex3,jdbcType=VARCHAR},
+      </if>
+      <if test="ex4 != null">
+        ex4 = #{ex4,jdbcType=VARCHAR},
+      </if>
+      <if test="ex5 != null">
+        ex5 = #{ex5,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null">
+        describe = #{describe,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where device_item_id = #{deviceItemId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceItem">
+    update myy_device_item
+    set device_list_id = #{deviceListId,jdbcType=INTEGER},
+      device_type = #{deviceType,jdbcType=VARCHAR},
+      device_name = #{deviceName,jdbcType=VARCHAR},
+      device_price = #{devicePrice,jdbcType=DECIMAL},
+      detect_range = #{detectRange,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      precision_value = #{precisionValue,jdbcType=VARCHAR},
+      principle = #{principle,jdbcType=VARCHAR},
+      comm = #{comm,jdbcType=VARCHAR},
+      detect_object = #{detectObject,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      ex1 = #{ex1,jdbcType=VARCHAR},
+      ex2 = #{ex2,jdbcType=VARCHAR},
+      ex3 = #{ex3,jdbcType=VARCHAR},
+      ex4 = #{ex4,jdbcType=VARCHAR},
+      ex5 = #{ex5,jdbcType=VARCHAR},
+      describe = #{describe,jdbcType=LONGVARBINARY}
+    where device_item_id = #{deviceItemId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.moyuaninfo.waterinfo.model.MyyDeviceItem">
+    update myy_device_item
+    set device_list_id = #{deviceListId,jdbcType=INTEGER},
+      device_type = #{deviceType,jdbcType=VARCHAR},
+      device_name = #{deviceName,jdbcType=VARCHAR},
+      device_price = #{devicePrice,jdbcType=DECIMAL},
+      detect_range = #{detectRange,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      precision_value = #{precisionValue,jdbcType=VARCHAR},
+      principle = #{principle,jdbcType=VARCHAR},
+      comm = #{comm,jdbcType=VARCHAR},
+      detect_object = #{detectObject,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      ex1 = #{ex1,jdbcType=VARCHAR},
+      ex2 = #{ex2,jdbcType=VARCHAR},
+      ex3 = #{ex3,jdbcType=VARCHAR},
+      ex4 = #{ex4,jdbcType=VARCHAR},
+      ex5 = #{ex5,jdbcType=VARCHAR}
+    where device_item_id = #{deviceItemId,jdbcType=INTEGER}
+  </update>
+</mapper>

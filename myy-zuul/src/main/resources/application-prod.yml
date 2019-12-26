@@ -1,0 +1,97 @@
+server:
+  port: 7010
+spring:
+  application:
+    name: myy-zuul
+  datasource:
+    url: jdbc:mysql://sh-cdb-mbj6mdpc.sql.tencentcdb.com:61732/db_river?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: ssr
+    password: myyun@r@srr
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+      initialSize: 10
+      minIdle: 8
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      filters: stat,wall,log4j
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 1000
+#  cloud:
+#    config:
+#      discovery:
+#        enabled: true
+#        service-id: CONFIG
+#      profile: dev
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://moyuan:moyuan123@localhost:8010/eureka/
+
+zuul:
+  host:
+    connect-timeout-millis: 15000
+    socket-timeout-millis: 10000
+  routes:
+    myy-baseserver:
+      path: /api/baseserver/**
+      serviceId: MYY-BASESERVER
+    myy-camera:
+      path: /api/camera/**
+      serviceId: MYY-CAMERA
+    myy-dangerinfo:
+      path: /api/danger/**
+      serviceId: MYY-DANGERINFO
+    myy-push:
+      path: /api/push/**
+      serviceId: MYY-PUSH
+    myy-security:
+      path: /api/login/**
+      serviceId: MYY-SECURITY
+    myy-signin:
+      path: /api/Signin/**
+      serviceId: MYY-SIGNIN
+    myy-news:  #####新闻
+      path: /api/news/**
+      url: http://49.235.78.177:8080
+    myy-cloudnetty:   #####云netty
+      path: /api/cloudnetty/**
+      serviceId: myy-cloudnetty
+    myy-waterinfo:   #####
+      path: /api/waterinfo/**
+      serviceId: MYY-WATERINFO
+    myy-suggest:   #####问题咨询
+      path: /api/suggest/**
+      serviceId: MYY-SUGGEST
+
+
+ribbon:
+  ConnectTimeout: 8000
+  ReadTimeout: 8000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 40000
+feign:
+  hystrix:
+    enabled: true

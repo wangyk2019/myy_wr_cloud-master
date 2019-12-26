@@ -1,0 +1,9 @@
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:mysql://sh-cdb-mbj6mdpc.sql.tencentcdb.com:61732/db_river?useUnicode=true&characterEncoding=UTF-8
+    username: ssr
+    password: myyun@r@srr
+
+server:
+  port: 8082

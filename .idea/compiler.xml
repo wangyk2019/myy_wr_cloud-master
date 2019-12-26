@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="myy-cloudnetty" />
+        <module name="myy-dangerInfo" />
+        <module name="myy-suggest" />
+        <module name="myy-zuul" />
+        <module name="myy-liveplay" />
+        <module name="myy-signin" />
+        <module name="myy-camera" />
+        <module name="myy-push" />
+        <module name="myy-baseserver" />
+        <module name="configserver" />
+        <module name="myy-security" />
+        <module name="myy-waterinfo" />
+        <module name="myy-eureka" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="configserver" target="1.8" />
+      <module name="myy-baseserver" target="1.8" />
+      <module name="myy-camera" target="1.8" />
+      <module name="myy-cloudnetty" target="1.8" />
+      <module name="myy-dangerInfo" target="1.8" />
+      <module name="myy-eureka" target="1.8" />
+      <module name="myy-liveplay" target="1.8" />
+      <module name="myy-push" target="1.8" />
+      <module name="myy-security" target="1.8" />
+      <module name="myy-signin" target="1.8" />
+      <module name="myy-suggest" target="1.8" />
+      <module name="myy-waterinfo" target="1.8" />
+      <module name="myy-zuul" target="1.8" />
+      <module name="watercloud" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="configserver" options="-parameters" />
+      <module name="myy-baseserver" options="-parameters" />
+      <module name="myy-camera" options="-parameters" />
+      <module name="myy-cloudnetty" options="-parameters" />
+      <module name="myy-dangerInfo" options="-parameters" />
+      <module name="myy-eureka" options="-parameters" />
+      <module name="myy-liveplay" options="-parameters" />
+      <module name="myy-push" options="-parameters" />
+      <module name="myy-security" options="-parameters" />
+      <module name="myy-signin" options="-parameters" />
+      <module name="myy-suggest" options="-parameters" />
+      <module name="myy-waterinfo" options="-parameters" />
+      <module name="myy-zuul" options="-parameters" />
+    </option>
+  </component>
+</project>

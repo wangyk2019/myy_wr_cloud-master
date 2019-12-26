@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moyuaninfo.waterinfo.dao.MyySuggestMapper">
+  <resultMap id="BaseResultMap" type="com.moyuaninfo.waterinfo.model.MyySuggest">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="area_id" jdbcType="INTEGER" property="areaId" />
+    <result column="district_id" jdbcType="INTEGER" property="districtId" />
+    <result column="create_user" jdbcType="BIGINT" property="createUser" />
+    <result column="update_user" jdbcType="BIGINT" property="updateUser" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.moyuaninfo.waterinfo.model.MyySuggest">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="photo_path" jdbcType="LONGVARCHAR" property="photoPath" />
+    <result column="file_names" jdbcType="LONGVARCHAR" property="fileNames" />
+    <result column="result" jdbcType="LONGVARCHAR" property="result" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, status, area_id, district_id, create_user, update_user, create_time, update_time, 
+    comment, state
+  </sql>
+  <sql id="Blob_Column_List">
+    content, photo_path, file_names, result
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.moyuaninfo.waterinfo.model.MyySuggestExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from myy_suggest
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.moyuaninfo.waterinfo.model.MyySuggestExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from myy_suggest
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from myy_suggest
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from myy_suggest
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.moyuaninfo.waterinfo.model.MyySuggestExample">
+    delete from myy_suggest
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.moyuaninfo.waterinfo.model.MyySuggest">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into myy_suggest (status, area_id, district_id, 
+      create_user, update_user, create_time, 
+      update_time, comment, state, 
+      content, photo_path, file_names, 
+      result)
+    values (#{status,jdbcType=VARCHAR}, #{areaId,jdbcType=INTEGER}, #{districtId,jdbcType=INTEGER}, 
+      #{createUser,jdbcType=BIGINT}, #{updateUser,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{comment,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR}, #{photoPath,jdbcType=LONGVARCHAR}, #{fileNames,jdbcType=LONGVARCHAR}, 
+      #{result,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.moyuaninfo.waterinfo.model.MyySuggest">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into myy_suggest
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="status != null">
+        status,
+      </if>
+      <if test="areaId != null">
+        area_id,
+      </if>
+      <if test="districtId != null">
+        district_id,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="photoPath != null">
+        photo_path,
+      </if>
+      <if test="fileNames != null">
+        file_names,
+      </if>
+      <if test="result != null">
+        result,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null">
+        #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="districtId != null">
+        #{districtId,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=BIGINT},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="photoPath != null">
+        #{photoPath,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="fileNames != null">
+        #{fileNames,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="result != null">
+        #{result,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.moyuaninfo.waterinfo.model.MyySuggestExample" resultType="java.lang.Integer">
+    select count(*) from myy_suggest
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update myy_suggest
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaId != null">
+        area_id = #{record.areaId,jdbcType=INTEGER},
+      </if>
+      <if test="record.districtId != null">
+        district_id = #{record.districtId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createUser != null">
+        create_user = #{record.createUser,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateUser != null">
+        update_user = #{record.updateUser,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.photoPath != null">
+        photo_path = #{record.photoPath,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.fileNames != null">
+        file_names = #{record.fileNames,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.result != null">
+        result = #{record.result,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update myy_suggest
+    set id = #{record.id,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=VARCHAR},
+      area_id = #{record.areaId,jdbcType=INTEGER},
+      district_id = #{record.districtId,jdbcType=INTEGER},
+      create_user = #{record.createUser,jdbcType=BIGINT},
+      update_user = #{record.updateUser,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=LONGVARCHAR},
+      photo_path = #{record.photoPath,jdbcType=LONGVARCHAR},
+      file_names = #{record.fileNames,jdbcType=LONGVARCHAR},
+      result = #{record.result,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update myy_suggest
+    set id = #{record.id,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=VARCHAR},
+      area_id = #{record.areaId,jdbcType=INTEGER},
+      district_id = #{record.districtId,jdbcType=INTEGER},
+      create_user = #{record.createUser,jdbcType=BIGINT},
+      update_user = #{record.updateUser,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.moyuaninfo.waterinfo.model.MyySuggest">
+    update myy_suggest
+    <set>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null">
+        area_id = #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="districtId != null">
+        district_id = #{districtId,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=BIGINT},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="photoPath != null">
+        photo_path = #{photoPath,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="fileNames != null">
+        file_names = #{fileNames,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="result != null">
+        result = #{result,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.moyuaninfo.waterinfo.model.MyySuggest">
+    update myy_suggest
+    set status = #{status,jdbcType=VARCHAR},
+      area_id = #{areaId,jdbcType=INTEGER},
+      district_id = #{districtId,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=BIGINT},
+      update_user = #{updateUser,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      comment = #{comment,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR},
+      photo_path = #{photoPath,jdbcType=LONGVARCHAR},
+      file_names = #{fileNames,jdbcType=LONGVARCHAR},
+      result = #{result,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.moyuaninfo.waterinfo.model.MyySuggest">
+    update myy_suggest
+    set status = #{status,jdbcType=VARCHAR},
+      area_id = #{areaId,jdbcType=INTEGER},
+      district_id = #{districtId,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=BIGINT},
+      update_user = #{updateUser,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      comment = #{comment,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

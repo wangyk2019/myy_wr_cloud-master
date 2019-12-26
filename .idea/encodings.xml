@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/configserver" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/myy-baseserver" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/myy-camera" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/myy-cloudnetty" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/myy-dangerInfo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/myy-eureka" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/myy-liveplay" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/myy-push" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/myy-security" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/myy-signin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/myy-suggest" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/myy-waterinfo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/myy-zuul" charset="UTF-8" />
+  </component>
+</project>
